@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=0"
+    />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>map</title>
+    <style>
+      body,
+      html,
+      #container {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+        .input-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 999;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .input-container input {
+            width: 300px;
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .input-container button {
+            padding: 8px 15px;
+            background: #1890ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .input-container button:hover {
+            background: #40a9ff;
+        }
+
+        .input-container p {
+            margin: 10px 0 5px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+  </head>
+
+  <body>
+    <div id="container"></div>
+    <div class="input-container">
+        <p>请输入城市名称，用逗号分隔（如：北京,上海,广州）：</p>
+        <input type="text" id="cityInput" placeholder="请输入城市名称，用逗号分隔">
+        <button onclick="calculateDistances()">计算距离</button>
+    </div>
+  </body>
+  <script>
+    window._AMapSecurityConfig = {
+      securityJsCode: "8c9a26e733b197e9a8b86ea7baa3d592",
+    };
+  </script>
+  <script
+    language="javascript"
+    src="https://webapi.amap.com/maps?v=1.4.15&key=05274d5027e6b22978b2ade4630f3596&plugin=AMap.DistrictSearch,AMap.Scale,AMap.ToolBar,AMap.GeometryUtil,AMap.MouseToolAMap.Geocoder,AMap.Driving,AMap.Text,AMap.Geocoder"
+  ></script>
+
+  <script language="javascript">
+       var map = new AMap.Map("container", {
+        resizeEnable: true,
+        center: [116.397428, 39.90923],//地图中心点
+        zoom: 10 //地图显示的缩放级别
+    });
+    map.addControl(new AMap.Scale({
+    position: 'LB',
+    offset: new AMap.Pixel(50, 50)
+    }));
+
+    let opts = {
+      // 是否返回行政区边界坐标点
+      extensions: "all",
+      // 设置查询行政区级别为 市
+      level: "city",
+    };
+
+    // 创建DistrictSearch对象
+    const district = new AMap.DistrictSearch(opts);
+<!--    DrawSection("阿坝藏族羌族自治州", district, true);-->
+<!--    DrawSection("眉山市", district, true);-->
+<!--    DrawSection("雅安市", district, true);-->
+<!--    DrawSection("南充市", district, true);-->
+<!--    DrawSection("甘孜藏族自治州", district, true);-->
+<!--    DrawSection("凉山彝族自治州", district, true);-->
+<!--    DrawSection("乐山市", district, true);-->
+<!--    DrawSection("广元市", district, true);-->
+<!--    DrawSection("绵阳市", district, true);-->
+<!--    DrawSection("德阳市", district, true);-->
+<!--    DrawSection("成都市", district, true);-->
+<!--    DrawSection("遂宁市", district, true);-->
+<!--    DrawSection("达州市", district, true);-->
+<!--    DrawSection("泸州市", district, true);-->
+<!--    DrawSection("宜宾市", district, true);-->
+<!--    DrawSection("广安市", district, true);-->
+<!--    DrawSection("巴中市", district, true);-->
+<!--    DrawSection("攀枝花市", district, true);-->
+<!--    DrawSection("自贡市", district, true);-->
+<!--    DrawSection("白银市", district, true);-->
+<!--    DrawSection("伊犁哈萨克自治州", district, true);-->
+<!--    DrawSection("临夏回族自治州", district, true);-->
+<!--    DrawSection("吴忠市", district, true);-->
+<!--    DrawSection("平凉市", district, true);-->
+<!--    DrawSection("喀什地区", district, true);-->
+<!--    DrawSection("石嘴山市", district, true);-->
+<!--    DrawSection("兰州市", district, true);-->
+<!--    DrawSection("克拉玛依市", district, true);-->
+<!--    DrawSection("陇南市", district, true);-->
+<!--    DrawSection("塔城地区", district, true);-->
+<!--    DrawSection("庆阳市", district, true);-->
+<!--    DrawSection("阿克苏地区", district, true);-->
+<!--    DrawSection("金昌市", district, true);-->
+<!--    DrawSection("嘉峪关市", district, true);-->
+<!--    DrawSection("锡林郭勒盟", district, true);-->
+<!--    DrawSection("昌吉回族自治州", district, true);-->
+<!--    DrawSection("武威市", district, true);-->
+<!--    DrawSection("银川市", district, true);-->
+<!--    DrawSection("呼伦贝尔市", district, true);-->
+<!--    DrawSection("酒泉市", district, true);-->
+<!--    DrawSection("兴安盟", district, true);-->
+<!--    DrawSection("乌鲁木齐市", district, true);-->
+<!--    DrawSection("甘南藏族自治州", district, true);-->
+<!--    DrawSection("和田地区", district, true);-->
+<!--    DrawSection("定西市", district, true);-->
+<!--    DrawSection("阿拉善盟", district, true);-->
+<!--    DrawSection("张掖市", district, true);-->
+<!--    DrawSection("固原市", district, true);-->
+<!--    DrawSection("内江市", district, true);-->
+<!--    DrawSection("资阳市", district, true);-->
+<!--    DrawSection("呼和浩特市", district, true);-->
+<!--    DrawSection("通辽市", district, true);-->
+<!--    DrawSection("包头市", district, true);-->
+<!--    DrawSection("赤峰市", district, true);-->
+<!--    DrawSection("巴彦淖尔市", district, true);-->
+<!--    DrawSection("鄂尔多斯市", district, true);-->
+<!--    DrawSection("巴音郭楞蒙古自治州", district, true);-->
+<!--    DrawSection("乌海市", district, true);-->
+<!--    DrawSection("乌兰察布市", district, true);-->
+<!--    DrawSection("石河子市", district, true);-->
+<!--    DrawSection("阿勒泰地区", district, true);-->
+<!--    DrawSection("哈密市", district, true);-->
+<!--    DrawSection("吐鲁番市", district, true);-->
+<!--    DrawSection("克孜勒苏柯尔克孜自治州", district, true);-->
+<!--    DrawSection("博尔塔拉蒙古自治州", district, true);-->
+<!--    DrawSection("天水市", district, true);-->
+<!--    DrawSection("中卫市", district, true);-->
+
+    DrawSection("甘肃省", district, true);
+    DrawSection("四川省", district, true);
+    DrawSection("内蒙古", district, true);
+    DrawSection("新疆", district, true);
+    DrawSection("宁夏", district, true);
+
+    function DrawSection(cityName, district, isSearchNextLevel) {
+      district.search(cityName, function (status, result) {
+        let bounds = result.districtList[0].boundaries;
+        if (bounds) {
+          for (let i = 0; i < bounds.length; i += 1) {
+            if (isSearchNextLevel) {
+              // 绘制省的版块
+              new AMap.Polygon({
+                map: map,
+                path: bounds[i],
+                fillOpacity: 0.4,
+                strokeColor: "#0091ea",
+                strokeWeight: 1,
+                fillColor: "#80d8ff",
+              });
+            } else {
+              // 绘制市的边界线
+              new AMap.Polyline({
+                path: bounds[i],
+                strokeColor: "#0091ea",
+                map: map,
+              });
+            }
+          }
+<!--          if (isSearchNextLevel) {-->
+<!--            let districtList = result.districtList[0].districtList;-->
+<!--            for (let i = 0; i < districtList.length; i += 1) {-->
+<!--              DrawSection(districtList[i].name, district, false);-->
+<!--            }-->
+<!--          }-->
+        }
+      });
+    }
+    var city_name = ['阿坝藏族羌族自治州', '眉山市', '雅安市', '南充市', '甘孜藏族自治州', '凉山彝族自治州', '乐山市', '广元市', '绵阳市', '德阳市', '成都市', '遂宁市', '达州市', '泸州市', '宜宾市', '广安市', '巴中市', '攀枝花市', '自贡市', '白银市', '伊犁哈萨克自治州', '临夏回族自治州', '吴忠市', '平凉市', '喀什地区', '石嘴山市', '兰州市', '克拉玛依市', '陇南市', '塔城地区', '庆阳市', '阿克苏地区', '金昌市', '嘉峪关市', '锡林郭勒盟', '昌吉回族自治州', '武威市', '银川市', '呼伦贝尔市', '酒泉市', '兴安盟', '乌鲁木齐市', '甘南藏族自治州', '和田地区', '定西市', '阿拉善盟', '张掖市', '固原市', '内江市', '资阳市', '呼和浩特市', '通辽市', '包头市', '赤峰市', '巴彦淖尔市', '鄂尔多斯市', '巴音郭楞蒙古自治州', '乌海市', '乌兰察布市', '石河子市', '阿勒泰地区', '哈密市', '吐鲁番市', '克孜勒苏柯尔克孜自治州', '博尔塔拉蒙古自治州', '天水市', '中卫市']
+    var lnglats = [[102.224504, 31.899427], [103.848417, 30.077113], [103.041538, 30.009998], [106.110565, 30.837235], [101.96231, 30.04952], [102.267713, 27.881396], [103.766085, 29.552275], [105.844004, 32.435774], [104.679127, 31.467673], [104.397795, 31.127449], [104.066301, 30.572961], [105.592602, 30.53268], [107.46778, 31.209278], [105.441866, 28.87098], [104.642826, 28.752354], [106.632647, 30.456354], [106.747548, 31.867853], [101.71846, 26.582417], [104.779307, 29.33924], [104.138872, 36.545123], [81.323691, 43.917106], [103.210386, 35.601792], [106.198613, 37.997755], [106.664913, 35.542417], [75.989746, 39.470492], [106.382792, 38.984632], [103.834228, 36.060798], [84.889239, 45.577712], [104.960296, 33.370174], [82.980316, 46.745364], [107.643433, 35.709459], [80.265068, 41.170712], [102.187972, 38.521468], [98.2882, 39.77325], [116.047387, 43.933212], [87.308995, 44.011044], [102.637821, 37.92898], [106.230977, 38.487783], [119.77845, 49.166536], [98.49432, 39.733416], [122.037796, 46.082373], [87.616824, 43.825377], [102.911736, 34.983266], [79.921646, 37.114406], [104.592342, 35.607947], [105.729135, 38.851554], [100.449858, 38.924766], [106.24267, 36.01628], [105.057992, 29.58021], [104.627265, 30.129236], [111.748814, 40.842127], [122.243309, 43.653566], [109.95315, 40.621327], [118.887613, 42.256876], [107.387767, 40.742987], [109.782473, 39.608744], [86.145298, 41.764115], [106.79415, 39.655048], [113.132227, 40.994526], [86.080397, 44.305368], [88.141253, 47.844924], [93.515053, 42.819346], [89.190374, 42.950736], [76.167327, 39.714734], [82.066363, 44.906039], [105.724828, 34.581514], [105.19677, 37.500185]]
+    var capa =[6, 14, 2, 11, 6, 7, 5, 2, 17, 6, 38, 7, 10, 8, 20, 3, 2, 2, 3, 8, 8, 6, 7, 6, 9, 4, 38, 5, 9, 4, 6, 5, 3, 3, 6, 8, 5, 25, 11, 7, 5, 35, 2, 3, 8, 2, 6, 5, 0, 0, 11, 3, 19, 10, 2, 13, 7, 0, 4, 0, 2, 2, 2, 1, 2, 8, 3]
+    var infoWindow = new AMap.InfoWindow({offset: new AMap.Pixel(0, -30)});
+    for (var i = 0, marker; i < lnglats.length; i++) {
+        var marker = new AMap.Marker({
+        position: lnglats[i],
+        map: map
+    });
+
+    // 创建文本标签
+    var text = new AMap.Text({
+        text: city_name[i] + '：'+ capa[i],
+        anchor: 'center',
+        draggable: false,
+        cursor: 'pointer',
+        angle: 0,
+        style: {
+            'padding': '5px',
+            'border-radius': '3px',
+            'background-color': 'white',
+            'border': '1px solid #ccc',
+            'box-shadow': '3px 4px 3px rgba(0, 0, 0, 0.3)',
+            'font-size': '10px'
+        },
+        position: lnglats[i]
+    });
+
+    text.setMap(map);
+    }
+
+
+    map.setFitView();
+
+    // 处理输入并生成城市对
+        function generateCityPairs(cities) {
+            let pairs = [];
+            for (let i = 0; i < cities.length - 1; i++) {
+                pairs.push({
+                    start: cities[i].trim(),
+                    end: cities[i + 1].trim()
+                });
+            }
+            return pairs;
+        }
+
+        // 清除地图上的所有覆盖物
+        function clearMap() {
+            map.clearMap();
+        }
+        
+
+        // 主函数：处理用户输入并计算距离
+        function calculateDistances() {
+            // 获取输入值并分割成数组
+            const input = document.getElementById('cityInput').value;
+            const cities = input.split(',').map(city => city.trim()).filter(city => city);
+
+            // 检查输入是否有效
+            if (cities.length < 2) {
+                alert('请至少输入两个城市！');
+                return;
+            }
+
+            // 清除之前的路线和标记
+            //clearMap();
+
+            // 生成城市对
+            const cityPairs = generateCityPairs(cities);
+            console.log('生成的城市对：', cityPairs);
+
+            // 依次计算每对城市的距离
+            cityPairs.forEach((pair, index) => {
+                // 添加延时，避免并发请求过多
+                setTimeout(() => {
+                    calculateCityDistance(pair.start, pair.end);
+                }, index * 1000);
+            });
+        }
+
+        // 计算两个城市之间的距离（之前定义的函数）
+        function calculateCityDistance(startCity, endCity) {
+            var geocoder = new AMap.Geocoder();
+            var driving = new AMap.Driving({
+                map: map,
+                policy: AMap.DrivingPolicy.LEAST_TIME,
+                hideMarkers: false
+            });
+
+            geocoder.getLocation(startCity, function(status, result) {
+                if (status === 'complete' && result.geocodes.length) {
+                    const startLocation = result.geocodes[0].location;
+
+                    geocoder.getLocation(endCity, function(status, result) {
+                        if (status === 'complete' && result.geocodes.length) {
+                            const endLocation = result.geocodes[0].location;
+
+                            driving.search(
+                                [startLocation.lng, startLocation.lat],
+                                [endLocation.lng, endLocation.lat],
+                                function(status, result) {
+                                    if (status === 'complete' && result.routes && result.routes[0]) {
+                                        const route = result.routes[0];
+
+                                        new AMap.Text({
+                                            text: `${startCity}到${endCity}：${(route.distance/1000).toFixed(1)}公里`,
+                                            position: [endLocation.lng, endLocation.lat],
+                                            offset: new AMap.Pixel(0, -30),
+                                            style: {
+                                                'padding': '5px 10px',
+                                                'border': '1px solid #52c41a',
+                                                'background-color': '#fff',
+                                                'border-radius': '3px',
+                                                'font-size': '12px',
+                                                'color': '#52c41a',
+                                                'font-weight': 'bold'
+                                            }
+                                        }).setMap(map);
+
+                                        [
+                                            {name: startCity, lnglat: [startLocation.lng, startLocation.lat]},
+                                            {name: endCity, lnglat: [endLocation.lng, endLocation.lat]}
+                                        ].forEach(point => {
+                                            new AMap.Marker({
+                                                map: map,
+                                                position: point.lnglat,
+                                                title: point.name,
+                                                label: {
+                                                    content: point.name,
+                                                    direction: 'top'
+                                                }
+                                            });
+                                        });
+
+                                        map.setFitView();
+                                    }
+                                }
+                            );
+                        }
+                    });
+                }
+            });
+        }
+
+
+    // 后端路线添加
+    function calculateCityDistance(startCity, endCity) {
+    // 初始化地理编码服务
+    var geocoder = new AMap.Geocoder();
+
+    // 初始化驾车路线规划
+    var driving = new AMap.Driving({
+        map: map,
+        policy: AMap.DrivingPolicy.LEAST_TIME,
+        hideMarkers: false
+    });
+
+    // 先获取起点城市的经纬度
+    geocoder.getLocation(startCity, function(status, result) {
+        if (status === 'complete' && result.geocodes.length) {
+            const startLocation = result.geocodes[0].location;
+
+            // 获取终点城市的经纬度
+            geocoder.getLocation(endCity, function(status, result) {
+                if (status === 'complete' && result.geocodes.length) {
+                    const endLocation = result.geocodes[0].location;
+
+                    // 规划路线
+                    driving.search(
+                        [startLocation.lng, startLocation.lat],
+                        [endLocation.lng, endLocation.lat],
+                        function(status, result) {
+                            if (status === 'complete' && result.routes && result.routes[0]) {
+                                const route = result.routes[0];
+
+                                // 显示总距离
+                                new AMap.Text({
+                                    text: `${startCity}到${endCity}：${(route.distance/1000).toFixed(1)}公里`,
+                                    position: [endLocation.lng, endLocation.lat],
+                                    offset: new AMap.Pixel(0, -30),
+                                    style: {
+                                        'padding': '5px 10px',
+                                        'border': '1px solid #52c41a',
+                                        'background-color': '#fff',
+                                        'border-radius': '3px',
+                                        'font-size': '12px',
+                                        'color': '#52c41a',
+                                        'font-weight': 'bold'
+                                    }
+                                }).setMap(map);
+
+                                // 添加起终点标记
+                                [
+                                    {name: startCity, lnglat: [startLocation.lng, startLocation.lat]},
+                                    {name: endCity, lnglat: [endLocation.lng, endLocation.lat]}
+                                ].forEach(point => {
+                                    new AMap.Marker({
+                                        map: map,
+                                        position: point.lnglat,
+                                        title: point.name,
+                                        label: {
+                                            content: point.name,
+                                            direction: 'top'
+                                        }
+                                    });
+                                });
+
+                                // 调整地图视野
+                                map.setFitView();
+                            }
+                        }
+                    );
+                }
+            });
+        }
+    });
+}
+    var cityPairs = [
+    {start: "乌鲁木齐", end: "昌吉"},
+    {start: "昌吉", end: "博尔塔拉蒙古自治州"},
+    {start: "博尔塔拉蒙古自治州", end: "克拉玛依"},
+    {start: "克拉玛依", end: "塔城"}
+];
+
+// 循环计算每对城市的距离
+<!--cityPairs.forEach(pair => {-->
+<!--    calculateCityDistance(pair.start, pair.end);-->
+<!--});-->
+
+  </script>
+</html>
+
